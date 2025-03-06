@@ -22,10 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 #fsfs
-      - name: Build Docker Image
+      - name: set lower case owner name
         run: |
-           REPO_NAME=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
-           docker build -t ghcr.io/$REPO_NAME/app:latest .
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+           env:
+           OWNER: '${{ github.repository_owner }}'
 #fsfsf
 
       - name: Compile Java Application
